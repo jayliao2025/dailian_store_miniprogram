@@ -11,9 +11,9 @@ Page({
   data: {
     tabs: [
       { key: -1, text: '全部' },
-      { key: OrderStatus.PENDING_PAYMENT, text: '待付款', info: '' },
-      { key: OrderStatus.PENDING_DELIVERY, text: '待发货', info: '' },
-      { key: OrderStatus.PENDING_RECEIPT, text: '待收货', info: '' },
+      { key: OrderStatus.PENDING_PAYMENT, text: '待支付', info: '' },
+      { key: OrderStatus.PENDING_DELIVERY, text: '已支付', info: '' },
+      { key: OrderStatus.PENDING_RECEIPT, text: '服务中', info: '' },
       { key: OrderStatus.COMPLETE, text: '已完成', info: '' },
     ],
     curTab: -1,
@@ -88,7 +88,7 @@ Page({
               orderNo: order.orderNo,
               parentOrderNo: order.parentOrderNo,
               storeId: order.storeId,
-              storeName: order.storeName,
+              storeName: '三角洲代练服务',
               status: order.orderStatus,
               statusDesc: order.orderStatusName,
               amount: order.paymentAmount,

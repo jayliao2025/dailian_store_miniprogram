@@ -116,7 +116,7 @@ Page({
         ),
         buttons: order.buttonVOs || [],
         createTime: order.createTime,
-        receiverAddress: this.composeAddress(order),
+        receiverAddress: order.logisticsVO?.receiverArea || order.logisticsVO?.receiverAddress || '',
         groupInfoVo: order.groupInfoVo,
       };
       this.setData({
@@ -126,17 +126,14 @@ Page({
         countDownTime: this.computeCountDownTime(order),
         addressEditable:
           [OrderStatus.PENDING_PAYMENT, OrderStatus.PENDING_DELIVERY].includes(order.orderStatus) &&
-          order.orderSubStatus !== -1, // 订单正在取消审核时不允许修改地址（但是返回的状态码与待发货一致）
+          order.orderSubStatus !== -1,
         isPaid: !!order.paymentVO.paySuccessTime,
-        invoiceStatus: this.datermineInvoiceStatus(order),
-        invoiceDesc: order.invoiceDesc,
-        invoiceType: order.invoiceVO?.invoiceType === 5 ? '电子普通发票' : '不开发票', //是否开票 0-不开 5-电子发票
         logisticsNodes: this.flattenNodes(order.trajectoryVos || []),
       });
     });
   },
 
-  // 展开物流节点
+  // 展开服务进度节点
   flattenNodes(nodes) {
     return (nodes || []).reduce((res, node) => {
       return (node.nodes || []).reduce((res1, subNode, index) => {
@@ -151,26 +148,7 @@ Page({
     }, []);
   },
 
-  datermineInvoiceStatus(order) {
-    // 1-已开票
-    // 2-未开票（可补开）
-    // 3-未开票
-    // 4-门店不支持开票
-    return order.invoiceStatus;
-  },
-
-  // 拼接省市区
-  composeAddress(order) {
-    return [
-      //order.logisticsVO.receiverProvince,
-      order.logisticsVO.receiverCity,
-      order.logisticsVO.receiverCountry,
-      order.logisticsVO.receiverArea,
-      order.logisticsVO.receiverAddress,
-    ]
-      .filter((s) => !!s)
-      .join(' ');
-  },
+  // 当前模板沿用物流结构，这里借用 receiverArea / receiverAddress 承载区服与备注信息
 
   getStoreDetail() {
     fetchBusinessTime().then((res) => {
@@ -231,27 +209,10 @@ Page({
     });
   },
 
-  onToInvoice() {
-    wx.navigateTo({
-      url: `/pages/order/invoice/index?orderNo=${this.data._order.orderNo}`,
-    });
-  },
-
-  onSuppleMentInvoice() {
-    wx.navigateTo({
-      url: `/pages/order/receipt/index?orderNo=${this.data._order.orderNo}`,
-    });
-  },
 
   onDeliveryClick() {
-    const logisticsData = {
-      nodes: this.data.logisticsNodes,
-      company: this.data.order.logisticsVO.logisticsCompanyName,
-      logisticsNo: this.data.order.logisticsVO.logisticsNo,
-      phoneNumber: this.data.order.logisticsVO.logisticsCompanyTel,
-    };
-    wx.navigateTo({
-      url: `/pages/order/delivery-detail/index?data=${encodeURIComponent(JSON.stringify(logisticsData))}`,
+    wx.switchTab({
+      url: '/pages/contact/index',
     });
   },
 
@@ -268,16 +229,9 @@ Page({
   },
 
   clickService() {
-    Toast({
-      context: this,
-      selector: '#t-toast',
-      message: '您点击了联系客服',
+    wx.switchTab({
+      url: '/pages/contact/index',
     });
   },
 
-  onOrderInvoiceView() {
-    wx.navigateTo({
-      url: `/pages/order/invoice/index?orderNo=${this.orderNo}`,
-    });
-  },
 });

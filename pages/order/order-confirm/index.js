@@ -7,7 +7,7 @@ const stripeImg = `https://tdesign.gtimg.com/miniprogram/template/retail/order/s
 
 Page({
   data: {
-    placeholder: '备注信息',
+    placeholder: '填写服务备注，如区服、时段要求等',
     stripeImg,
     loading: false,
     settleDetailData: {
@@ -73,7 +73,7 @@ Page({
   // 处理不同情况下跳转到结算页时需要的参数
   handleOptionsParams(options, couponList) {
     let { goodsRequestList } = this; // 商品列表
-    let { userAddressReq } = this; // 收货地址
+    let { userAddressReq } = this; // 服务信息
 
     const storeInfoList = []; // 门店列表
     // 如果是从地址选择页面返回，则使用地址显选择页面新选择的地址去获取结算数据
@@ -152,7 +152,7 @@ Page({
     Toast({
       context: this,
       selector: '#t-toast',
-      message: '结算异常, 请稍后重试',
+      message: '下单信息异常，请稍后重试',
       duration: 2000,
       icon: '',
     });
@@ -252,7 +252,7 @@ Page({
       })
       .catch(() => {});
 
-    const { userAddressReq } = this; // 收货地址
+    const { userAddressReq } = this; // 服务信息
 
     let id = '';
 
@@ -312,11 +312,11 @@ Page({
   },
 
   onSureCommit() {
-    // 商品库存不足继续结算
+    // 套餐信息异常时继续重新整理下单数据
     const { settleDetailData } = this.data;
     const { outOfStockGoodsList, storeGoodsList, inValidGoodsList } = settleDetailData;
     if ((outOfStockGoodsList && outOfStockGoodsList.length > 0) || (inValidGoodsList && storeGoodsList)) {
-      // 合并正常商品 和 库存 不足商品继续支付
+      // 合并正常套餐与异常套餐后重新整理下单内容
       // 过滤不必要的参数
       const filterOutGoodsList = [];
       outOfStockGoodsList &&
@@ -343,7 +343,7 @@ Page({
       Toast({
         context: this,
         selector: '#t-toast',
-        message: '请添加收货地址',
+        message: '请添加服务信息',
         duration: 2000,
         icon: 'help-circle',
       });
@@ -386,7 +386,7 @@ Page({
             icon: '',
           });
           setTimeout(() => {
-            // 提交支付失败   返回购物车
+            // 提交支付失败后返回上一页
             wx.navigateBack();
           }, 2000);
         }
@@ -417,7 +417,7 @@ Page({
           Toast({
             context: this,
             selector: '#t-toast',
-            message: '支付失败，微信支付商户号设置有误，请商家重新检查支付设置。',
+            message: '支付失败，微信支付商户号设置有误，请管理员检查支付配置。',
             duration: 2000,
             icon: 'close-circle',
           });
@@ -433,7 +433,7 @@ Page({
             icon: '',
           });
           setTimeout(() => {
-            // 提交支付失败  返回购物车
+            // 提交支付失败后返回上一页
             wx.navigateBack();
           }, 2000);
         }
@@ -467,10 +467,15 @@ Page({
     });
   },
   onReceipt() {
-    // 跳转 开发票
     const invoiceData = this.invoiceData || {};
     wx.navigateTo({
       url: `/pages/order/receipt/index?invoiceData=${JSON.stringify(invoiceData)}`,
+    });
+  },
+
+  onContact() {
+    wx.switchTab({
+      url: '/pages/contact/index',
     });
   },
 

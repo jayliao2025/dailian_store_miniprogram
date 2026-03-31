@@ -5,6 +5,26 @@
   min-height: 100vh;
 }
 
+.service-panel {
+  margin: 0 24rpx 24rpx;
+  background: linear-gradient(135deg, #eff6ff, #ffffff);
+  border-radius: 20rpx;
+  padding: 24rpx 28rpx;
+}
+
+.service-panel__title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+.service-panel__desc {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #64748b;
+  line-height: 1.7;
+}
+
 .order-sure .wx-pay-cover {
   position: fixed;
   left: 0;

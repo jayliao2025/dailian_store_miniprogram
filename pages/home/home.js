@@ -5,7 +5,8 @@ import Toast from 'tdesign-miniprogram/toast/index';
 Page({
   data: {
     imgSrcs: [],
-    tabList: [],
+    hotList: [],
+    pointsActivity: null,
     goodsList: [],
     goodsListLoadStatus: 0,
     pageLoading: false,
@@ -20,10 +21,6 @@ Page({
   goodListPagination: {
     index: 0,
     num: 20,
-  },
-
-  privateData: {
-    tabIndex: 0,
   },
 
   onShow() {
@@ -54,19 +51,15 @@ Page({
     this.setData({
       pageLoading: true,
     });
-    fetchHome().then(({ swiper, tabList }) => {
+    fetchHome().then(({ swiper, hotList, pointsActivity }) => {
       this.setData({
-        tabList,
+        hotList,
+        pointsActivity,
         imgSrcs: swiper,
         pageLoading: false,
       });
       this.loadGoodsList(true);
     });
-  },
-
-  tabChangeHandle(e) {
-    this.privateData.tabIndex = e.detail;
-    this.loadGoodsList(true);
   },
 
   onReTry() {
@@ -83,7 +76,7 @@ Page({
     this.setData({ goodsListLoadStatus: 1 });
 
     const pageSize = this.goodListPagination.num;
-    let pageIndex = this.privateData.tabIndex * pageSize + this.goodListPagination.index + 1;
+    let pageIndex = this.goodListPagination.index + 1;
     if (fresh) {
       pageIndex = 0;
     }
@@ -114,7 +107,7 @@ Page({
     Toast({
       context: this,
       selector: '#t-toast',
-      message: '点击加入购物车',
+      message: '请先进入套餐详情页下单',
     });
   },
 
@@ -126,6 +119,23 @@ Page({
     const { index: promotionID = 0 } = detail || {};
     wx.navigateTo({
       url: `/pages/promotion/promotion-detail/index?promotion_id=${promotionID}`,
+    });
+  },
+
+  navToPointsActivity() {
+    Toast({
+      context: this,
+      selector: '#t-toast',
+      message: '免费抽积分活动即将上线',
+      icon: '',
+      duration: 1200,
+    });
+  },
+
+  navToHotDetail(e) {
+    const { spuId } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `/pages/goods/details/index?spuId=${spuId}`,
     });
   },
 });

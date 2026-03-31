@@ -16,9 +16,9 @@
   <view wx:if="{{!serviceRequireType}}" class="service-choice">
     <t-cell-group>
       <t-cell
-        title="申请退款（无需退货）"
+        title="申请退款（未开始服务）"
         arrow
-        description="没收到货，或与商家协商同意不用退货只退款"
+        description="订单已支付但服务还未开始，可申请直接退款"
         bindtap="onApplyOnlyRefund"
       >
         <t-icon
@@ -27,13 +27,13 @@
           class="t-cell__left__icon"
           name="goods_refund"
           size="48rpx"
-          color="#fa4126"
+          color="#2563eb"
         />
       </t-cell>
       <t-cell
         wx:if="{{canApplyReturn}}"
-        title="退货退款"
-        description="已收到货，需要退还收到的商品"
+        title="服务异常处理"
+        description="服务过程中存在异常，可提交说明等待人工处理"
         arrow
         bindtap="onApplyReturnGoods"
       >
@@ -43,29 +43,28 @@
           class="t-cell__left__icon"
           name="goods_return"
           size="48rpx"
-          color="#fa4126"
+          color="#2563eb"
         />
       </t-cell>
-      <t-cell wx:else class="non-returnable" title="退货退款" description="该商品不支持退货">
+      <t-cell wx:else class="non-returnable" title="服务异常处理" description="当前状态暂不支持发起异常处理">
         <t-icon
           slot="left-icon"
           prefix="wr"
           class="t-cell__left__icon"
           name="goods_return"
           size="48rpx"
-          color="#fa4126"
+          color="#2563eb"
         />
       </t-cell>
     </t-cell-group>
   </view>
-  <!-- 售后表单 -->
   <view wx:else class="service-form">
     <view class="service-from-group">
       <t-cell-group>
-        <t-cell title="商品收货状态" arrow note="{{serviceFrom.receiptStatus.desc}}" bind:tap="onApplyGoodsStatus" />
+        <t-cell title="服务状态" arrow note="{{serviceFrom.receiptStatus.desc}}" bind:tap="onApplyGoodsStatus" />
         <t-cell
           bordered="{{false}}"
-          title="退款原因"
+          title="处理原因"
           wx:if="{{canApplyReturn}}"
           note="{{serviceFrom.applyReason.desc}}"
           arrow
@@ -75,7 +74,7 @@
     </view>
     <view class="service-from-group">
       <t-cell-group>
-        <t-cell title="退款商品数量">
+        <t-cell title="涉及套餐数量">
           <t-stepper
             slot="note"
             theme="filled"
@@ -86,7 +85,7 @@
           />
         </t-cell>
         <t-cell
-          title="退款金额"
+          title="申请金额"
           t-class-description="refund-money__description"
           description="{{amountTip}}"
           bind:tap="onAmountTap"
@@ -108,14 +107,14 @@
       </t-cell-group>
     </view>
     <view class="service-from-group__textarea">
-      <text class="textarea--label">退款说明</text>
+      <text class="textarea--label">情况说明</text>
       <t-textarea
         style="height: 220rpx"
         value="{{serviceFrom.remark}}"
         t-class="textarea--content"
         maxlength="200"
         indicator
-        placeholder="退款说明（选填）"
+        placeholder="请填写退款原因或服务异常说明"
         bind:change="onRemarkChange"
       />
     </view>
@@ -145,12 +144,11 @@
         bindtap="onSubmit"
         loading="{{submitting}}"
       >
-        提交
+        提交申请
       </t-button>
     </view>
   </view>
 </view>
-<!-- 收货状态选择 -->
 <t-popup visible="{{showReceiptStatusDialog}}" placement="bottom" bindclose="onReceiptStatusDialogConfirm">
   <view class="dialog--service-status" slot="content">
     <view class="options">
@@ -168,15 +166,13 @@
     <view class="cancel" hover-class="cancel--active" bindtap="onReceiptStatusDialogConfirm">取消</view>
   </view>
 </t-popup>
-<!-- 理由选择 -->
 <wr-reason-sheet id="wr-reason-sheet" />
-<!-- 金额填写 -->
 <t-dialog
   id="input-dialog"
   visible="{{inputDialogVisible}}"
   class="{{serviceFrom.amount.focus ? 'amount-dialog--focus' : ''}}"
 >
-  <view class="input-dialog__title" slot="title">退款金额</view>
+  <view class="input-dialog__title" slot="title">申请金额</view>
   <view class="input-dialog__content" slot="content">
     <t-input
       t-class="input"

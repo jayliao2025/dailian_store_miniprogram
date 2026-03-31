@@ -2,6 +2,7 @@
  value="{{active}}"
  bindchange="onChange"
  split="{{false}}"
+ theme="tag"
 >
 	<t-tab-bar-item
 	 wx:for="{{list}}"

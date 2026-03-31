@@ -4,6 +4,10 @@
 <wxs module="getNotes" src="./getNotes.wxs" />
 <view class="order-sure" wx:if="{{!loading}}">
   <address-card addressData="{{userAddress}}" bind:addclick="onGotoAddress" bind:addressclick="onGotoAddress" />
+  <view class="service-panel">
+    <view class="service-panel__title">服务信息</view>
+    <view class="service-panel__desc">请确认服务区服、账号信息和时间要求，提交后可继续支付。</view>
+  </view>
   <view
     class="order-wrapper"
     wx:for="{{settleDetailData.storeGoodsList}}"
@@ -36,7 +40,7 @@
   </view>
   <view class="pay-detail">
     <view class="pay-item">
-      <text>商品总额</text>
+      <text>套餐总额</text>
       <price
         fill
         decimalSmaller
@@ -45,13 +49,9 @@
       />
     </view>
     <view class="pay-item">
-      <text>运费</text>
+      <text>服务方式</text>
       <view class="pay-item__right font-bold">
-        <block wx:if="{{settleDetailData.totalDeliveryFee && settleDetailData.totalDeliveryFee != 0}}">
-          +
-          <price fill decimalSmaller price="{{settleDetailData.totalDeliveryFee}}" />
-        </block>
-        <text wx:else>免运费</text>
+        <text>人工代练</text>
       </view>
     </view>
     <view class="pay-item">
@@ -78,10 +78,10 @@
         <t-icon name="chevron-right" size="32rpx" color="#BBBBBB" />
       </view>
     </view>
-    <view class="pay-item" wx:if="{{settleDetailData.invoiceSupport}}">
-      <text>发票</text>
-      <view class="pay-item__right" catchtap="onReceipt">
-        <text>{{handleInvoice(invoiceData)}}</text>
+    <view class="pay-item">
+      <text>联系客服</text>
+      <view class="pay-item__right" catchtap="onContact">
+        <text>下单前先咨询</text>
         <t-icon name="chevron-right" size="32rpx" color="#BBBBBB" />
       </view>
     </view>
@@ -89,7 +89,7 @@
       <text>订单备注</text>
       <view class="pay-item__right" data-storenoteindex="{{0}}" catchtap="onNotes">
         <text class="pay-remark"
-          >{{getNotes(storeInfoList, 0) ? getNotes(storeInfoList, 0) :'选填，建议先和商家沟通确认'}}</text
+          >{{getNotes(storeInfoList, 0) ? getNotes(storeInfoList, 0) :'选填，建议先和客服沟通确认'}}</text
         >
         <t-icon name="chevron-right" size="32rpx" color="#BBBBBB" />
       </view>
@@ -97,8 +97,8 @@
   </view>
   <view class="amount-wrapper">
     <view class="pay-amount">
-      <text class="order-num">共{{settleDetailData.totalGoodsCount}}件</text>
-      <text>小计</text>
+      <text class="order-num">共{{settleDetailData.totalGoodsCount}}项</text>
+      <text>应付</text>
       <price class="total-price" price="{{settleDetailData.totalPayAmount}}" fill="{{false}}" decimalSmaller />
     </view>
   </view>
@@ -128,7 +128,7 @@
       class="notes"
       t-class="add-notes__textarea"
       value="{{storeInfoList[storeNoteIndex] && storeInfoList[storeNoteIndex].remark}}"
-      placeholder="备注信息"
+      placeholder="填写服务备注，如区服、时段要求等"
       t-class-textarea="add-notes__textarea__font"
       bindfocus="onFocus"
       bindblur="onBlur"

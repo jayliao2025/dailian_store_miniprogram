@@ -4,75 +4,53 @@ import Toast from 'tdesign-miniprogram/toast/index';
 const menuData = [
   [
     {
-      title: '收货地址',
+      title: '我的订单',
       tit: '',
       url: '',
-      type: 'address',
+      type: 'order',
     },
     {
-      title: '优惠券',
-      tit: '',
-      url: '',
-      type: 'coupon',
-    },
-    {
-      title: '积分',
+      title: '积分明细',
       tit: '',
       url: '',
       type: 'point',
     },
-  ],
-  [
     {
-      title: '帮助中心',
+      title: '联系客服',
       tit: '',
       url: '',
-      type: 'help-center',
-    },
-    {
-      title: '客服热线',
-      tit: '',
-      url: '',
-      type: 'service',
-      icon: 'service',
+      type: 'contact',
     },
   ],
 ];
 
 const orderTagInfos = [
   {
-    title: '待付款',
+    title: '待支付',
     iconName: 'wallet',
     orderNum: 0,
-    tabType: 5,
+    tabType: 1,
     status: 1,
   },
   {
-    title: '待发货',
-    iconName: 'deliver',
+    title: '已支付',
+    iconName: 'secured',
     orderNum: 0,
-    tabType: 10,
+    tabType: 2,
     status: 1,
   },
   {
-    title: '待收货',
-    iconName: 'package',
+    title: '服务中',
+    iconName: 'time-filled',
     orderNum: 0,
-    tabType: 40,
+    tabType: 3,
     status: 1,
   },
   {
-    title: '待评价',
-    iconName: 'comment',
+    title: '已完成',
+    iconName: 'check-circle-filled',
     orderNum: 0,
-    tabType: 60,
-    status: 1,
-  },
-  {
-    title: '退款/售后',
-    iconName: 'exchang',
-    orderNum: 0,
-    tabType: 0,
+    tabType: 4,
     status: 1,
   },
 ];
@@ -141,36 +119,22 @@ Page({
     const { type } = currentTarget.dataset;
 
     switch (type) {
-      case 'address': {
-        wx.navigateTo({ url: '/pages/user/address/list/index' });
+      case 'order': {
+        this.jumpAllOrder();
         break;
       }
-      case 'service': {
-        this.openMakePhone();
-        break;
-      }
-      case 'help-center': {
-        Toast({
-          context: this,
-          selector: '#t-toast',
-          message: '你点击了帮助中心',
-          icon: '',
-          duration: 1000,
-        });
+      case 'contact': {
+        wx.switchTab({ url: '/pages/contact/index' });
         break;
       }
       case 'point': {
         Toast({
           context: this,
           selector: '#t-toast',
-          message: '你点击了积分菜单',
+          message: '积分明细功能开发中',
           icon: '',
           duration: 1000,
         });
-        break;
-      }
-      case 'coupon': {
-        wx.navigateTo({ url: '/pages/coupon/coupon-list/index' });
         break;
       }
       default: {
@@ -188,12 +152,7 @@ Page({
 
   jumpNav(e) {
     const status = e.detail.tabType;
-
-    if (status === 0) {
-      wx.navigateTo({ url: '/pages/order/after-service-list/index' });
-    } else {
-      wx.navigateTo({ url: `/pages/order/order-list/index?status=${status}` });
-    }
+    wx.navigateTo({ url: `/pages/order/order-list/index?status=${status}` });
   },
 
   jumpAllOrder() {

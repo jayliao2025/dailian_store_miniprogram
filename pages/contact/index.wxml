@@ -1,0 +1,27 @@
+<view class="contact-page">
+  <view class="contact-card contact-hero">
+    <view class="contact-title">联系客服</view>
+    <view class="contact-desc">{{serviceText}}</view>
+  </view>
+
+  <view class="contact-card">
+    <view class="section-title">官方客服</view>
+    <button class="contact-btn" open-type="contact">立即咨询</button>
+  </view>
+
+  <view class="contact-card">
+    <view class="section-title">客服二维码</view>
+    <view class="qr-wrapper">
+      <t-image src="{{qrCodeUrl}}" t-class="qr-image" mode="aspectFill" />
+    </view>
+    <view class="section-note">可截图保存后扫码添加客服</view>
+  </view>
+
+  <view class="contact-card">
+    <view class="section-title">温馨提示</view>
+    <view wx:for="{{serviceTips}}" wx:key="index" class="tip-item">
+      <t-icon name="check-circle-filled" size="32rpx" color="#22c55e" />
+      <text>{{item}}</text>
+    </view>
+  </view>
+</view>

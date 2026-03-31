@@ -31,7 +31,7 @@
           </view>
         </view>
         <view class="activity-show">
-          <view class="activity-show-text">领劵</view>
+          <view class="activity-show-text">活动说明</view>
           <t-icon name="chevron-right" size="42rpx" />
         </view>
       </view>
@@ -46,7 +46,12 @@
           </t-button>
         </view>
       </view>
-      <view class="goods-intro">{{intro}}</view>
+      <view class="goods-intro">{{intro || '套餐服务说明、区服要求、时间安排等可在下单前先咨询客服确认。'}}</view>
+      <view class="service-note">
+        <view class="service-note__item">· 支持联系客服确认服务细节</view>
+        <view class="service-note__item">· 下单后可查看订单进度</view>
+        <view class="service-note__item">· 完结后按规则返积分</view>
+      </view>
     </view>
     <view class="spu-select" bindtap="showSkuSelectPopup">
       <view class="label">已选</view>

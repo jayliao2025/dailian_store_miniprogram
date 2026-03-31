@@ -159,6 +159,17 @@ page {
   overflow: hidden;
 }
 
+.service-note {
+  margin-top: 20rpx;
+  padding-right: 30rpx;
+}
+
+.service-note__item {
+  font-size: 24rpx;
+  color: #64748b;
+  line-height: 1.8;
+}
+
 .spu-select {
   height: 80rpx;
   background-color: #fff;

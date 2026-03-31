@@ -46,7 +46,7 @@ Page({
       },
     ],
     storeLogo: `${imgPrefix}common/store-logo.png`,
-    storeName: '云mall标准版旗舰店',
+    storeName: '三角洲代练服务',
     jumpArray: [
       {
         title: '首页',
@@ -54,10 +54,9 @@ Page({
         iconName: 'home',
       },
       {
-        title: '购物车',
-        url: '/pages/cart/index',
-        iconName: 'cart',
-        showCartNum: true,
+        title: '客服',
+        url: '/pages/contact/index',
+        iconName: 'service',
       },
     ],
     isStock: true,
@@ -107,7 +106,9 @@ Page({
   },
 
   toAddCart() {
-    this.showSkuSelectPopup(2);
+    wx.switchTab({
+      url: '/pages/contact/index',
+    });
   },
 
   toNav(e) {
@@ -220,7 +221,7 @@ Page({
     Toast({
       context: this,
       selector: '#t-toast',
-      message: isAllSelectedSku ? '点击加入购物车' : '请选择规格',
+      message: isAllSelectedSku ? '请在下单页继续确认服务信息' : '请选择规格',
       icon: '',
       duration: 1000,
     });
@@ -232,7 +233,7 @@ Page({
       Toast({
         context: this,
         selector: '#t-toast',
-        message: '请选择规格',
+        message: '请选择套餐规格',
         icon: '',
         duration: 1000,
       });
@@ -316,8 +317,8 @@ Page({
       const promotionArray = [];
       activityList.forEach((item) => {
         promotionArray.push({
-          tag: item.promotionSubCode === 'MYJ' ? '满减' : '满折',
-          label: '满100元减99.9元',
+          tag: item.promotionSubCode === 'MYJ' ? '积分抵扣' : '限时优惠',
+          label: '下单可享积分抵扣与活动优惠',
         });
       });
       this.setData({

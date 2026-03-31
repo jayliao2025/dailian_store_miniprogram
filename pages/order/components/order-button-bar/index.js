@@ -10,7 +10,7 @@ Component({
     order: {
       type: Object,
       observer(order) {
-        // 判定有传goodsIndex ，则认为是商品button bar, 仅显示申请售后按钮
+        // 判定有传goodsIndex ，则认为是套餐条目按钮栏，仅显示申请售后按钮
         if (this.properties?.goodsIndex !== null) {
           const goods = order.goodsList[Number(this.properties.goodsIndex)];
           this.setData({
@@ -126,16 +126,16 @@ Component({
 
     onConfirm() {
       Dialog.confirm({
-        title: '确认是否已经收到货？',
+        title: '确认服务已完成？',
         content: '',
-        confirmBtn: '确认收货',
+        confirmBtn: '确认完成',
         cancelBtn: '取消',
       })
         .then(() => {
           Toast({
             context: this,
             selector: '#t-toast',
-            message: '你确认了确认收货',
+            message: '已确认服务完成',
             icon: 'check-circle',
           });
         })
@@ -143,7 +143,7 @@ Component({
           Toast({
             context: this,
             selector: '#t-toast',
-            message: '你取消了确认收货',
+            message: '已取消确认完成',
             icon: 'check-circle',
           });
         });
@@ -153,7 +153,7 @@ Component({
       Toast({
         context: this,
         selector: '#t-toast',
-        message: '你点击了去支付',
+        message: '请继续完成支付',
         icon: 'check-circle',
       });
     },
@@ -162,7 +162,7 @@ Component({
       Toast({
         context: this,
         selector: '#t-toast',
-        message: '你点击了再次购买',
+        message: '请重新选择套餐下单',
         icon: 'check-circle',
       });
     },
@@ -192,7 +192,7 @@ Component({
       Toast({
         context: this,
         selector: '#t-toast',
-        message: '你点击了查看退款',
+        message: '查看退款进度',
         icon: '',
       });
     },

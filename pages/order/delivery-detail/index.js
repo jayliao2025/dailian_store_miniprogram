@@ -14,7 +14,7 @@ Page({
     try {
       data = JSON.parse(decodeURIComponent(query.data || '{}'));
     } catch (e) {
-      console.warn('物流节点数据解析失败', e);
+      console.warn('服务进度数据解析失败', e);
     }
     if (Number(query.source) === 2) {
       const service = {

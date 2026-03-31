@@ -7,37 +7,29 @@ function mockFetchHome() {
   return delay().then(() => {
     return {
       swiper: genSwiperImageList(),
-      tabList: [
+      hotList: [
         {
-          text: '精选推荐',
-          key: 0,
+          spuId: 'hot-1',
+          thumb: `${cdnBase}/goods/goods1.png`,
+          title: '三角洲双排上分热销套餐',
+          price: 19900,
+          originPrice: 25900,
+          soldCount: 128,
         },
         {
-          text: '夏日防晒',
-          key: 1,
-        },
-        {
-          text: '二胎大作战',
-          key: 2,
-        },
-        {
-          text: '人气榜',
-          key: 3,
-        },
-        {
-          text: '好评榜',
-          key: 4,
-        },
-        {
-          text: 'RTX 30',
-          key: 5,
-        },
-        {
-          text: '手机也疯狂',
-          key: 6,
+          spuId: 'hot-2',
+          thumb: `${cdnBase}/goods/goods2.png`,
+          title: '三角洲王牌冲分热门套餐',
+          price: 29900,
+          originPrice: 35900,
+          soldCount: 86,
         },
       ],
-      activityImg: `${cdnBase}/activity/banner.png`,
+      pointsActivity: {
+        title: '免费抽积分',
+        subtitle: '每日可参与，积分可抵扣订单金额',
+        buttonText: '立即抽奖',
+      },
     };
   });
 }

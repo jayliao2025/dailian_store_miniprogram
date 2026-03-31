@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "选择售后类型",
+  "navigationBarTitleText": "申请退款/异常处理",
   "usingComponents": {
     "wr-price": "/components/price/index",
     "wr-order-goods-card": "../components/order-goods-card/index",

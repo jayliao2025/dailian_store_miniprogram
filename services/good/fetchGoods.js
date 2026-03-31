@@ -12,6 +12,7 @@ function mockFetchGoodsList(pageIndex = 1, pageSize = 20) {
         title: item.title,
         price: item.minSalePrice,
         originPrice: item.maxLinePrice,
+        soldCount: (pageIndex + 1) * 12 + item.spuId.length,
         tags: item.spuTagList.map((tag) => tag.title),
       };
     }),
